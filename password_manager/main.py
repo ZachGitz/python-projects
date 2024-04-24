@@ -54,7 +54,8 @@ def save_pass():
 from tkinter import *
 from tkinter import messagebox
 window = Tk()
-window.config(padx=50, pady=50)
+
+window.config(padx=50, pady=50,)
 
 website_label = Label(text="Website:")
 canvas = Canvas(width=200, height=200)
