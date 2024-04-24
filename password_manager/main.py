@@ -55,7 +55,7 @@ from tkinter import *
 from tkinter import messagebox
 window = Tk()
 
-window.config(padx=50, pady=50,)
+window.config(padx=50, pady=50)
 
 website_label = Label(text="Website:")
 canvas = Canvas(width=200, height=200)
@@ -94,10 +94,10 @@ webEnt.focus()
 emailEnt.grid(row=2, column=1, columnspan=2)
 
 
-passENt.grid(row=3, column=1)
+passENt.grid(row=3, column=1, columnspan=2)
 
 
-gen.grid(row=3, column=2)
+gen.grid(row=3, column=3)
 
 
 add.grid(row=4, column=1, columnspan=2)
