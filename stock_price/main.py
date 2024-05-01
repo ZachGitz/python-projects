@@ -16,7 +16,7 @@ stock_params = {
 }
 
 news_params = {
-    "apiKey":"b9a66afd63d040dfb5e79b434c9d72e9",
+    "apiKey":"API",
     "qInTitle": COMPANY_NAME
 }
 
