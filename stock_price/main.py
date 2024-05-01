@@ -8,46 +8,50 @@ STOCK_ENDPOINT = "https://www.alphavantage.co/query"
 NEWS_ENDPOINT = "https://newsapi.org/v2/everything"
 
 
+
 stock_params = {
     "function" :"TIME_SERIES_DAILY",
     "symbol": STOCK_NAME,
     "apikey": "TEO62KFLKZB5VB44"
 }
 
-data = requests.get(STOCK_ENDPOINT,params=stock_params).json()["Time Series (Daily)"]
+news_params = {
+    "apiKey":"b9a66afd63d040dfb5e79b434c9d72e9",
+    "qInTitle": COMPANY_NAME
+}
+
+data = requests.get(STOCK_ENDPOINT, params=stock_params).json()["Time Series (Daily)"]
 
 list_s = [value for (key,value) in data.items()]
 
-stock_open =float(list_s[0]["1. open"])
-stock_close=float(list_s[0]["4. close"])
-perc_inc_dec = round(((stock_close - stock_open)/stock_open)*100,2)
-print(perc_inc_dec)
+stock_close_last =float(list_s[1]["4. close"])
+stock_close_today=float(list_s[0]["4. close"])
+diff_in_price = abs(stock_close_last - stock_close_today)
+
 
     ## STEP 1: Use https://www.alphavantage.co/documentation/#daily
 # When stock price increase/decreases by 5% between yesterday and the day before yesterday then print("Get News").
 
-#TODO 1. - Get yesterday's closing stock price. Hint: You can perform list comprehensions on Python dictionaries. e.g. [new_value for (key, value) in dictionary.items()]
+diff_perc =  round((diff_in_price/stock_close_last)*100,2)
 
-#TODO 2. - Get the day before yesterday's closing stock price
 
-#TODO 3. - Find the positive difference between 1 and 2. e.g. 40 - 20 = -20, but the positive difference is 20. Hint: https://www.w3schools.com/python/ref_func_abs.asp
 
-#TODO 4. - Work out the percentage difference in price between closing price yesterday and closing price the day before yesterday.
 
-#TODO 5. - If TODO4 percentage is greater than 5 then print("Get News").
 
-    ## STEP 2: https://newsapi.org/ 
-    # Instead of printing ("Get News"), actually get the first 3 news pieces for the COMPANY_NAME. 
+if(diff_perc>=5):
+    articles = requests.get(NEWS_ENDPOINT,params=news_params).json()["articles"]
+    three_articles = articles[:3]
+    new_list = [f"Headline:{i['title']}\n Brief: {i['description']}" for i in three_articles]
+    print(new_list)
 
-#TODO 6. - Instead of printing ("Get News"), use the News API to get articles related to the COMPANY_NAME.
 
-#TODO 7. - Use Python slice operator to create a list that contains the first 3 articles. Hint: https://stackoverflow.com/questions/509211/understanding-slice-notation
+
 
 
     ## STEP 3: Use twilio.com/docs/sms/quickstart/python
     #to send a separate message with each article's title and description to your phone number. 
 
-#TODO 8. - Create a new list of the first 3 article's headline and description using list comprehension.
+
 
 #TODO 9. - Send each article as a separate message via Twilio. 
 
